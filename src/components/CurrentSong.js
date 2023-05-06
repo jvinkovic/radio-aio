@@ -29,7 +29,7 @@ const CurrentSong = ({url, interval}) => {
 
     return (<>
             <h3>{songData?.nowplaying}</h3>
-            <img src={songData?.coverart} alt='Cover' />
+            <img src={songData?.coverart || ''} alt='Cover' />
         </>);
 }
 

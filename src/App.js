@@ -7,16 +7,9 @@ import { UzivoCurrent, LightCurrent, TurboCurrent } from './shared/CurrentSongs'
 import { UzivoList, LightList, TurboList } from './shared/Lists';
 
 import { useEffect, useState } from 'react';
-import { useWakeLock } from 'react-screen-wake-lock';
 
 
-function App() {
-  const { isSupported, released, request, release } = useWakeLock({
-    onRequest: () => console.log('Screen Wake Lock: requested!'),
-    onError: (e) => console.error(`Screen Wake Lock: ERROR!`, e),
-    onRelease: () => alert('Screen Wake Lock: released!'),
-  });
-
+function App() { 
   const [stream, setStream] = useState(Uzivo);
   const [streamName, setStreamName] = useState('Uživo');
   const [songUrl, setSongUrl] = useState(UzivoCurrent);
@@ -28,11 +21,16 @@ function App() {
   }
 
   useEffect(() => {
+    const wl = navigator.wakeLock.request();
+    wl.then(r => console.log('wake lock:', !r.released));
+  }, []);
+
+  useEffect(() => {
     document.title = streamName + ' - Banovina AIO';
   }, [streamName]);
 
   return (
-    <div className="App"> 
+    <div className="App">
       <h1>Banovina All in one</h1>
       <Player stream={stream} streamName={streamName} />
       <CurrentSong url={songUrl} interval={15}/>
