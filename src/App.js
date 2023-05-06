@@ -1,7 +1,6 @@
 import './App.css';
 import Player from './components/Player';
 import CurrentSong from './components/CurrentSong';
-import SongsList from './components/SongsList';
 
 import { Uzivo, Light, Turbo } from './shared/Streams';
 import { UzivoCurrent, LightCurrent, TurboCurrent } from './shared/CurrentSongs';
