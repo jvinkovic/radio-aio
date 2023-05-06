@@ -5,9 +5,18 @@ import CurrentSong from './components/CurrentSong';
 import { Uzivo, Light, Turbo } from './shared/Streams';
 import { UzivoCurrent, LightCurrent, TurboCurrent } from './shared/CurrentSongs';
 import { UzivoList, LightList, TurboList } from './shared/Lists';
+
 import { useEffect, useState } from 'react';
+import { useWakeLock } from 'react-screen-wake-lock';
+
 
 function App() {
+  const { isSupported, released, request, release } = useWakeLock({
+    onRequest: () => console.log('Screen Wake Lock: requested!'),
+    onError: (e) => console.error(`Screen Wake Lock: ERROR!`, e),
+    onRelease: () => alert('Screen Wake Lock: released!'),
+  });
+
   const [stream, setStream] = useState(Uzivo);
   const [streamName, setStreamName] = useState('Uživo');
   const [songUrl, setSongUrl] = useState(UzivoCurrent);
