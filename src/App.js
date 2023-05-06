@@ -8,7 +8,6 @@ import { UzivoList, LightList, TurboList } from './shared/Lists';
 
 import { useEffect, useState } from 'react';
 
-
 function App() { 
   const [stream, setStream] = useState(Uzivo);
   const [streamName, setStreamName] = useState('Uživo');
