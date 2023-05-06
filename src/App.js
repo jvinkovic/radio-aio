@@ -23,7 +23,7 @@ function App() {
   }, [streamName]);
 
   return (
-    <div className="App">
+    <div className="App"> 
       <h1>Banovina All in one</h1>
       <Player stream={stream} streamName={streamName} />
       <CurrentSong url={songUrl} interval={15}/>
