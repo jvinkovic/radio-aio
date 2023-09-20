@@ -27,9 +27,19 @@ const CurrentSong = ({url, interval}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
 
+    let title = songData?.nowplaying;
+    if(!title) {
+      title = songData?.trackhistory[0];
+    }
+
+    let cover = songData?.coverart;
+    if(!cover) {
+      cover = songData?.covers[0];
+    }
+
     return (<>
-            <h3>{songData?.nowplaying}</h3>
-            <img src={songData?.coverart || ''} alt='Cover' />
+            <h3>{title}</h3>
+            <img src={ cover || ''} alt='Cover' />
         </>);
 }
 
