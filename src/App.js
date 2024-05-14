@@ -28,17 +28,33 @@ function App() {
     document.title = streamName + ' - Banovina AIO';
   }, [streamName]);
 
+  const changeTheme = (e) => {
+    // not to interupt player / make rerender
+    document.getElementById('app').classList.toggle('dark');    
+    document.getElementById('checkbox').setAttribute('checked', !e.target.checked);
+  }
+
   return (
-    <div className="App">
+    <div id='app' className={'App dark'}>
+      <aside>
+        <div>
+          <a target='_blank' rel='noreferrer' href={UzivoList}>Uživo povijest</a>
+          <a target='_blank' rel='noreferrer' href={LightList}>Light povijest</a>
+          <a target='_blank' rel='noreferrer' href={TurboList}>Turbo povijest</a>
+        </div>
+
+        <div className="theme-switch-wrapper">
+        <label className="theme-switch" htmlFor="checkbox">
+          <input type="checkbox" id="checkbox" onClick={changeTheme} />
+          <div className="slider round"></div>
+        </label>
+      </div>
+      </aside>
+
       <h1>Banovina All in one</h1>
       <Player stream={stream} streamName={streamName} />
       <CurrentSong url={songUrl} interval={15}/>
 
-      <aside>
-        <a target='_blank' rel='noreferrer' href={UzivoList}>Uživo povijest</a>
-        <a target='_blank' rel='noreferrer' href={LightList}>Light povijest</a>
-        <a target='_blank' rel='noreferrer' href={TurboList}>Turbo povijest</a>
-      </aside>
       <hr/>
       
       <div className='streams'>
