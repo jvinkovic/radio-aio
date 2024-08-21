@@ -162,7 +162,8 @@ hr {
     font-size: 1rem;
   }
 }
-.theme-switch {
+.theme-switch {  
+  align-self: flex-start;
   display: inline-block;
   height: 34px;
   position: relative;
