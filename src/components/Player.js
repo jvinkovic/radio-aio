@@ -11,7 +11,7 @@ const Player = ({stream, streamName}) => {
     });
 
     return (<div>
-        <h2>Banovina {streamName}</h2>        
+        <h2>{streamName}</h2>        
         <audio ref={playerRef}
                 preload="none"
                 controls

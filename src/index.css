@@ -24,3 +24,7 @@ code {
   background-color: black !important;
   color: aliceblue !important;
 }
+
+.invisible {
+  display: none !important;
+}

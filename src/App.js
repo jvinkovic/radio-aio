@@ -1,22 +1,14 @@
 import './App.css';
+import { useEffect, useState } from 'react';
 import Player from './components/Player';
 import CurrentSong from './components/CurrentSong';
-
-import { Uzivo, Light, Turbo } from './shared/Streams';
-import { UzivoCurrent, LightCurrent, TurboCurrent } from './shared/CurrentSongs';
-import { UzivoList, LightList, TurboList } from './shared/Lists';
-
-import { useEffect, useState } from 'react';
+import streams from './shared/Streams';
 
 function App() { 
-  const [stream, setStream] = useState(Uzivo);
-  const [streamName, setStreamName] = useState('Uživo');
-  const [songUrl, setSongUrl] = useState(UzivoCurrent);
+  const [currentStream, setCurrentStream] = useState(streams[0]);  
 
-  const changeStream = (stream, name, currentUrl) => {
-    setStream(stream);
-    setStreamName(name);
-    setSongUrl(currentUrl);
+  const changeStream = (stream) => {
+    setCurrentStream(stream);
   }
 
   useEffect(() => {
@@ -25,22 +17,31 @@ function App() {
   }, []);
 
   useEffect(() => {
-    document.title = streamName + ' - Banovina AIO';
-  }, [streamName]);
+    document.title = 'Radio: ' + currentStream.name;
+  }, [currentStream.name]);
 
   const changeTheme = (e) => {
     // not to interupt player / make rerender
-    document.getElementById('app').classList.toggle('dark');    
+    document.getElementById('app').classList.toggle('dark');
     document.getElementById('checkbox').setAttribute('checked', !e.target.checked);
+  }
+
+  const showHistory = () => {
+    // not to interupt player / make rerender
+    document.getElementById('history-urls').classList.toggle('invisible');
   }
 
   return (
     <div id='app' className={'App dark'}>
       <aside>
-        <div>
-          <a target='_blank' rel='noreferrer' href={UzivoList}>Uživo povijest</a>
-          <a target='_blank' rel='noreferrer' href={LightList}>Light povijest</a>
-          <a target='_blank' rel='noreferrer' href={TurboList}>Turbo povijest</a>
+        <div style={{textAlign: 'left'}}>
+          <span onClick={showHistory}>Povijest</span>
+          {showHistory && 
+            <div className='invisible' id='history-urls' style={{display: 'flex', flexDirection: 'column', flexWrap: 'wrap', maxHeight: '15vh'}}>          
+              {streams.map(s => 
+                s.historyUrl && <a key={s.stream} target='_blank' rel='noreferrer' href={s.historyUrl} style={{marginRight: '10px'}}>{s.name}</a>
+              )}          
+            </div>}
         </div>
 
         <div className="theme-switch-wrapper">
@@ -51,33 +52,31 @@ function App() {
       </div>
       </aside>
 
-      <h1>Banovina All in one</h1>
-      <Player stream={stream} streamName={streamName} />
-      <CurrentSong url={songUrl} interval={15}/>
+      <Player stream={currentStream.url} streamName={currentStream.name} />
+       {(currentStream.currentSongUrl && <CurrentSong url={currentStream.currentSongUrl} interval={15} songDataFunc={currentStream.currentSongDataFunc}/>)
+        || <span>*?*</span>}
 
       <hr/>
       
       <div className='streams'>
-        <button className={Uzivo === stream ? 'selected' : null} onClick={() => changeStream(Uzivo, 'Uživo', UzivoCurrent)}>Uživo</button>
-        <button className={Light === stream ? 'selected' : null} onClick={() => changeStream(Light, 'Light', LightCurrent)}>Light</button>
-        <button className={Turbo === stream ? 'selected' : null} onClick={() => changeStream(Turbo, 'Turbo', TurboCurrent)}>Turbo</button>
+        {streams.map(s => 
+              <button key={s.stream} className={s.url === currentStream.url ? 'selected' : null} onClick={() => changeStream(s)}>{s.name}</button>
+        )}
       </div>
 
       <hr />
 
-      <div style={{display: 'flex', justifyContent: 'space-around'}}>
-        <div style={{width: '33vw'}}>
-          <h4>Uživo</h4>
-          <CurrentSong url={UzivoCurrent} />
-        </div>
-        <div style={{width: '33vw'}}>
-          <h4>Light</h4>
-          <CurrentSong url={LightCurrent} />
-        </div>
-        <div style={{width: '33vw'}}>
-          <h4>Turbo</h4>
-          <CurrentSong url={TurboCurrent} />
-        </div>
+      <div style={{display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+        {streams.map(s =>           
+          <div key={s.stream} style={{width: '33vw'}}>
+            <h4>{s.name}</h4>
+            {
+              (s.currentSongUrl 
+                && <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} />)
+              || <span>*?*</span>
+            }
+          </div>
+          )}
       </div>
     </div>
   );
