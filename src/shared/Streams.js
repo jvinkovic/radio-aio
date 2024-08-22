@@ -19,7 +19,7 @@ const banovinaSongDataFunc = (input, setFunc) => {
 const streams = [
     { 
         name: 'DRS',
-        url: 'http://178.33.135.245:3474/stream',
+        url: 'https://eu2.fastcast4u.com/proxy/mic0?mp=/stream&1724290816711',
         web: 'https://drugacija.me/'
     },
     { 
@@ -56,16 +56,6 @@ const streams = [
         url: 'https://ec2s.crolive.com.hr:8035/stream',
         web: 'https://www.slavonskiradio.hr/'
     },
-    { 
-        name: 'Slavonija',
-        url: 'http://s8.iqstreaming.com:8026/stream',
-        web: 'http://www.radioslavonija.hr/'
-    },
-    { 
-        name: 'Brod',
-        url: 'http://194.145.208.251:8010/stream',
-        web: 'http://www.radiobrod.hr/'
-    }
 ];
 
 export default streams;
