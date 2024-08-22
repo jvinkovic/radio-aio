@@ -52,10 +52,9 @@ function App() {
       </div>
       </aside>
 
-      <Player stream={currentStream.url} streamName={currentStream.name} webUrl={currentStream.web} />
+      <Player stream={currentStream} />
        {(currentStream.currentSongUrl && <CurrentSong url={currentStream.currentSongUrl} interval={15} songDataFunc={currentStream.currentSongDataFunc}/>)
-        || <span>*?*</span>}
-
+        || <span>??</span>}        
       <hr/>
       
       <div className='streams'>
@@ -73,7 +72,7 @@ function App() {
             {
               (s.currentSongUrl 
                 && <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} />)
-              || <span>*?*</span>
+              || <span>??</span>
             }
           </div>
           )}

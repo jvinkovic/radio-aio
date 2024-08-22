@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const Player = ({stream, streamName, webUrl}) => {
+const Player = ({stream}) => {
 
     let playerRef = useRef();   
 
@@ -12,14 +12,21 @@ const Player = ({stream, streamName, webUrl}) => {
 
     return (<div className='player'>
         <h2>
-            {(webUrl && <a target='_blank' href={webUrl} rel='noreferrer'>{streamName}</a>)
-                || streamName}
-        </h2>        
+            {(stream.url && <a target='_blank' href={stream.url} rel='noreferrer'>{stream.name}</a>)
+                || stream.name}
+        </h2>
+        
+        {stream.frequencies && 
+        <div style={{margin: '10px'}}>
+            {stream.frequencies?.map(f => 
+                <span key={f} style={{margin: '5px', fontStyle: 'italic'}}>{f}</span>
+            )} Mhz
+        </div>}
         <audio ref={playerRef}
                 preload="none"
                 controls
                 title="Radio Banovina">
-            <source src={stream} />
+            <source src={stream.url} />
         </audio>
     </div>);
 }

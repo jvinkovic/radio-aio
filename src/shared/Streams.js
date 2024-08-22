@@ -20,12 +20,14 @@ const streams = [
     { 
         name: 'DRS',
         url: 'https://eu2.fastcast4u.com/proxy/mic0?mp=/stream&1724290816711',
-        web: 'https://drugacija.me/'
+        web: 'https://drugacija.me/',
+        frequencies: ['104,8', '101,5', '97,1', '95,5', '93,0', '90,3'],
     },
     { 
         name: 'Banovina Uživo',
         url: 'https://audio.radio-banovina.hr:9998/stream',
         web: 'https://www.radio-banovina.hr/',
+        frequencies: ['96,8', '93,2', '99,1'],
         historyUrl: 'https://www.radio-banovina.hr/uzivo/song_history.html',
         currentSongUrl: 'https://pool.alter-media.hr:2020/json/stream/banovina',
         currentSongDataFunc: banovinaSongDataFunc
@@ -49,12 +51,14 @@ const streams = [
     { 
         name: 'Đakovo',
         url: 'https://ec2s.crolive.com.hr:8305/stream',
-        web: 'https://www.radio-djakovo.hr/'
+        web: 'https://www.radio-djakovo.hr/',
+        frequencies: ['100,2', '89,6'],
     },
     { 
         name: 'Slavonski',
         url: 'https://ec2s.crolive.com.hr:8035/stream',
-        web: 'https://www.slavonskiradio.hr/'
+        web: 'https://www.slavonskiradio.hr/',
+        frequencies: ['106,2', '100,6', '91,0', '89,7'],
     },
 ];
 
