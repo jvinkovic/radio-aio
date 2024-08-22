@@ -27,7 +27,7 @@ const streams = [
         name: 'Banovina Uživo',
         url: 'https://audio.radio-banovina.hr:9998/stream',
         web: 'https://www.radio-banovina.hr/',
-        frequencies: ['96,8', '93,2', '99,1'],
+        frequencies: ['99,1', '96,8', '93,2'],
         historyUrl: 'https://www.radio-banovina.hr/uzivo/song_history.html',
         currentSongUrl: 'https://pool.alter-media.hr:2020/json/stream/banovina',
         currentSongDataFunc: banovinaSongDataFunc
