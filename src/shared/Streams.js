@@ -58,7 +58,7 @@ const streams = [
     },
     { 
         name: 'Slavonija',
-        url: 'http://s8.iqstreaming.com:8026/streamhttp://www.radioslavonija.hr/',
+        url: 'http://s8.iqstreaming.com:8026/stream',
         web: 'http://www.radioslavonija.hr/'
     },
     { 
