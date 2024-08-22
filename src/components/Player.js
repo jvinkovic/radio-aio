@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const Player = ({stream, streamName}) => {
+const Player = ({stream, streamName, webUrl}) => {
 
     let playerRef = useRef();   
 
@@ -10,8 +10,11 @@ const Player = ({stream, streamName}) => {
         playerRef.current.play();
     });
 
-    return (<div>
-        <h2>{streamName}</h2>        
+    return (<div className='player'>
+        <h2>
+            {(webUrl && <a target='_blank' href={webUrl} rel='noreferrer'>{streamName}</a>)
+                || streamName}
+        </h2>        
         <audio ref={playerRef}
                 preload="none"
                 controls

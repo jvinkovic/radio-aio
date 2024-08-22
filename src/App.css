@@ -25,6 +25,11 @@ hr {
   clear: both;
 }
 
+.player a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .streams button,
 .button-78 {
   align-items: center;
