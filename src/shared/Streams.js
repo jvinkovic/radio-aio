@@ -15,6 +15,7 @@ const banovinaSongDataFunc = (input, setFunc) => {
     historyUrl: link to songs history (optional)
     currentSongUrl: url to current song details (optional)
     currentSongDataFunc: function to transform current song data (optional)
+    frequencies: FM frequencies on which radio is available (MHz)
 */
 const streams = [
     { 
@@ -59,6 +60,12 @@ const streams = [
         url: 'https://ec2s.crolive.com.hr:8035/stream',
         web: 'https://www.slavonskiradio.hr/',
         frequencies: ['106,2', '100,6', '91,0', '89,7'],
+    },
+    { 
+        name: 'Tamburaški',
+        url: 'https://listen.radioking.com/radio/552965/stream/612287',
+        web: 'https://www.tamburaski.com/',
+        frequencies: [''],
     },
 ];
 
