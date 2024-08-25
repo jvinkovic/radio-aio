@@ -8,8 +8,9 @@ const banovinaSongDataFunc = (input, setFunc) => {
 };
 
 const tamburaskiSongDataFunc = (input, setFunc) => {
+    const album = !!input?.album ? input.album : ' / ';
     const data = {
-        nowplaying: `${input.title} (${input.album})`,
+        nowplaying: `${input.title} (${album})`,
         coverart: input.cover,
         artist: input.artist
     };

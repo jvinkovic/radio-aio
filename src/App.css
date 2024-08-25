@@ -30,6 +30,10 @@ hr {
   text-decoration: none;
 }
 
+.cover-img {
+  width: 250px;
+}
+
 .streams button,
 .button-78 {
   align-items: center;

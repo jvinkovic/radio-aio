@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import useInterval from "use-interval-hook";
 import PropTypes from 'prop-types';
+import genericCover from '../assets/cover.jpg';
+import ModalImage from "react-modal-image";
 
-const CurrentSong = ({url, songDataFunc, interval: checkInterval}) => {
+const CurrentSong = ({url, songDataFunc, checkInterval}) => {
     const [songData, setSongData] = useState(null);
 
     const getData = () => {
-        fetch(url).then(r => r.json())
-            .then(data => songDataFunc(data, setSongData));
+      if(url) {  
+        fetch(url)
+          .then(r => r.json())
+          .then(data => songDataFunc(data, setSongData));
+      }
     }
 
     const {
@@ -38,7 +43,11 @@ const CurrentSong = ({url, songDataFunc, interval: checkInterval}) => {
     return (<>
             <h3>{title}</h3>
             <h4>{artist}</h4>
-            <img src={ cover || ''} alt='Cover' />
+            <ModalImage
+              className='cover-img'
+              small={cover || genericCover}
+              large={cover || genericCover}
+              alt="Cover art" />            
         </>);
 }
 

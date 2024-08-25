@@ -69,11 +69,7 @@ function App() {
         {streams.map(s =>           
           <div key={s.stream} style={{width: '33vw'}}>
             <h4>{s.name}</h4>
-            {
-              (s.currentSongUrl 
-                && <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} />)
-              || <span>??</span>
-            }
+            <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} />
           </div>
           )}
       </div>
