@@ -32,13 +32,12 @@ const CurrentSong = ({url, songDataFunc, interval: checkInterval}) => {
       title = "??";
     }
 
-    let cover = songData?.coverart;
-    if(!cover) {
-      cover = songData?.covers[0];
-    }
+    const cover = songData?.coverart;
+    const artist = songData?.artist;
 
     return (<>
             <h3>{title}</h3>
+            <h4>{artist}</h4>
             <img src={ cover || ''} alt='Cover' />
         </>);
 }
@@ -54,7 +53,7 @@ songDataFunc = {
   setFunc: PropTypes.func({data: PropTypes.shape({
       nowplaying: PropTypes.string.isRequired,
       coverart: PropTypes.string,
-      covers: PropTypes.arrayOf(PropTypes.string)
+      artist: PropTypes.string
     })
   }).isRequired
 }

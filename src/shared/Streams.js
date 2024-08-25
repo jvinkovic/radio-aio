@@ -1,12 +1,21 @@
 const banovinaSongDataFunc = (input, setFunc) => {
     const data = {
         nowplaying: input.nowplaying,
-        coverart: input.coverart,
-        covers: input.covers
+        coverart: input.coverart
     };
     
     setFunc(data);
 };
+
+const tamburaskiSongDataFunc = (input, setFunc) => {
+    const data = {
+        nowplaying: `${input.title} (${input.album})`,
+        coverart: input.cover,
+        artist: input.artist
+    };
+    
+    setFunc(data);
+}
 
 /* list of streams to be shown
     name: name to show
@@ -18,6 +27,13 @@ const banovinaSongDataFunc = (input, setFunc) => {
     frequencies: FM frequencies on which radio is available (MHz)
 */
 const streams = [
+    { 
+        name: 'Tamburaški',
+        url: 'https://listen.radioking.com/radio/552965/stream/612287',
+        web: 'https://www.tamburaski.com/',        
+        currentSongUrl: 'https://api.radioking.io/widget/radio/tamburaskiradio/track/current',
+        currentSongDataFunc: tamburaskiSongDataFunc,
+    },
     { 
         name: 'DRS',
         url: 'https://eu2.fastcast4u.com/proxy/mic0?mp=/stream&1724290816711',
@@ -60,13 +76,7 @@ const streams = [
         url: 'https://ec2s.crolive.com.hr:8035/stream',
         web: 'https://www.slavonskiradio.hr/',
         frequencies: ['106,2', '100,6', '91,0', '89,7'],
-    },
-    { 
-        name: 'Tamburaški',
-        url: 'https://listen.radioking.com/radio/552965/stream/612287',
-        web: 'https://www.tamburaski.com/',
-        frequencies: [''],
-    },
+    }
 ];
 
 export default streams;
