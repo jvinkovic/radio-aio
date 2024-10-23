@@ -12,7 +12,7 @@ const Player = ({stream}) => {
 
     return (<div className='player'>
         <h2>
-            {(stream.url && <a target='_blank' href={stream.url} rel='noreferrer'>{stream.name}</a>)
+            {(stream.web && <a target='_blank' href={stream.web} rel='noreferrer'>{stream.name}</a>)
                 || stream.name}
         </h2>
         
