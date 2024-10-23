@@ -59,16 +59,17 @@ function App() {
       
       <div className='streams'>
         {streams.map(s => 
-              <button key={s.stream} className={s.url === currentStream.url ? 'selected' : null} onClick={() => changeStream(s)}>{s.name}</button>
+              <button key={s.stream} className={s.url === currentStream.url ? 'selected stream-select' : 'stream-select'} onClick={() => changeStream(s)}>{s.name}</button>
         )}
       </div>
 
       <hr />
 
-      <div style={{display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+      <div className='current-songs' style={{display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
         {streams.map(s =>           
           <div key={s.stream} style={{width: '33vw'}}>
-            <h4>{s.name}</h4>
+            <h4 className={s.url === currentStream.url ? 'selected stream-select-mini' : 'stream-select-mini'} 
+              onClick={() => changeStream(s)}>{s.name}</h4>
             <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} />
           </div>
           )}
