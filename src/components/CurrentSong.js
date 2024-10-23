@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import genericCover from '../assets/cover.jpg';
 import ModalImage from "react-modal-image";
 
-const CurrentSong = ({url, songDataFunc, checkInterval}) => {
+const CurrentSong = ({url, songDataFunc, checkInterval, onTitleClicked}) => {
     const [songData, setSongData] = useState(null);
 
     const getData = () => {
@@ -41,7 +41,8 @@ const CurrentSong = ({url, songDataFunc, checkInterval}) => {
     const artist = songData?.artist;
 
     return (<>
-            <h3>{title}</h3>
+            <h3 style={{cursor: !!onTitleClicked ? 'pointer' : 'auto'}} 
+              onClick={onTitleClicked}>{title}</h3>
             <h4>{artist}</h4>
             <ModalImage
               className='cover-img'

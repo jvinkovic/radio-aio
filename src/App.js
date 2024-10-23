@@ -70,7 +70,7 @@ function App() {
           <div key={s.stream} style={{width: '33vw'}}>
             <h4 className={s.url === currentStream.url ? 'selected stream-select-mini' : 'stream-select-mini'} 
               onClick={() => changeStream(s)}>{s.name}</h4>
-            <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} />
+            <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} onTitleClicked={() => changeStream(s)} />
           </div>
           )}
       </div>
