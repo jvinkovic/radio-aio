@@ -4,7 +4,7 @@ import Player from './components/Player';
 import CurrentSong from './components/CurrentSong';
 import streams from './shared/Streams';
 
-function App() { 
+const App = () => { 
   const [currentStream, setCurrentStream] = useState(streams[0]);  
 
   const changeStream = (stream) => {
@@ -39,7 +39,7 @@ function App() {
           {showHistory && 
             <div className='invisible' id='history-urls' style={{display: 'flex', flexDirection: 'column', flexWrap: 'wrap', maxHeight: '15vh'}}>          
               {streams.map(s => 
-                s.historyUrl && <a key={s.stream} target='_blank' rel='noreferrer' href={s.historyUrl} style={{marginRight: '10px'}}>{s.name}</a>
+                s.historyUrl && <a key={s.url} target='_blank' rel='noreferrer' href={s.historyUrl} style={{marginRight: '10px'}}>{s.name}</a>
               )}          
             </div>}
         </div>
@@ -59,7 +59,7 @@ function App() {
       
       <div className='streams'>
         {streams.map(s => 
-              <button key={s.stream} className={s.url === currentStream.url ? 'selected stream-select' : 'stream-select'} onClick={() => changeStream(s)}>{s.name}</button>
+              <button key={s.url} className={s.url === currentStream.url ? 'selected stream-select' : 'stream-select'} onClick={() => changeStream(s)}>{s.name}</button>
         )}
       </div>
 
@@ -67,7 +67,7 @@ function App() {
 
       <div className='current-songs' style={{display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
         {streams.map(s =>           
-          <div key={s.stream} style={{width: '33vw'}}>
+          <div key={s.url} style={{width: '33vw'}}>
             <h4 className={s.url === currentStream.url ? 'selected stream-select-mini' : 'stream-select-mini'} 
               onClick={() => changeStream(s)}>{s.name}</h4>
             <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} onTitleClicked={() => changeStream(s)} />

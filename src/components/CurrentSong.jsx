@@ -53,7 +53,7 @@ const CurrentSong = ({url, songDataFunc, checkInterval, onTitleClicked}) => {
 }
 
 CurrentSong.propTypes = {
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   songDataFunc: PropTypes.func,
   checkInterval: PropTypes.number
 };
