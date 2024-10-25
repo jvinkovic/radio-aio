@@ -8,10 +8,8 @@ const CurrentSong = ({url, songDataFunc, checkInterval, onTitleClicked}) => {
     const [songData, setSongData] = useState(null);
 
     const getData = () => {
-      if(url) {  
-        fetch(url)
-          .then(r => r.json())
-          .then(data => songDataFunc(data, setSongData));
+      if(!!songDataFunc && !!url) {
+        songDataFunc(url, setSongData);
       }
     }
 

@@ -1,21 +1,68 @@
-const banovinaSongDataFunc = (input, setFunc) => {
-    const data = {
-        nowplaying: input.nowplaying,
-        coverart: input.coverart
+const getDataSocket = (url, onMessageFunc) => {
+    const socket = new WebSocket(url);
+
+    socket.onopen = function(event) {
+    // Handle connection open
     };
-    
-    setFunc(data);
+
+    socket.onmessage = function(event) {
+        onMessageFunc(event.data);
+    };
+
+    socket.onclose = function(event) {
+    // Handle connection close
+    };
+
+    const sendMessage = (message) => {
+        socket.send(message);
+    }
+
+    return {};
+}
+
+const banovinaSongDataFunc = (url, setFunc) => {
+    fetch(url).then(r => r.json()).then(result => {
+        const data = {
+            nowplaying: result.nowplaying,
+            coverart: result.coverart
+        };
+        
+        setFunc(data);
+    });
 };
 
-const tamburaskiSongDataFunc = (input, setFunc) => {
-    const album = !!input?.album ? input.album : ' / ';
-    const data = {
-        nowplaying: `${input.title} (${album})`,
-        coverart: input.cover,
-        artist: input.artist
-    };
-    
-    setFunc(data);
+const tamburaskiSongDataFunc = (url, setFunc) => {
+    fetch(url).then(r => r.json()).then(result => {
+        const album = !!result?.album ? result.album : ' / ';
+        const data = {
+            nowplaying: `${result.title} (${album})`,
+            coverart: result.cover,
+            artist: result.artist
+        };
+        
+        setFunc(data);
+    });
+}
+
+const antenaSongDataFunc = (url, setFunc) => {
+    fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
+        .then(response => response.json())
+        .then(result => {
+            const data = {
+                nowplaying: `${result?.contents.split(' - ')[1]}`,
+                coverart: null,
+                artist: result?.contents.split(' - ')[0]
+            };
+            
+            setFunc(data);
+        })
+        .catch(error => console.error('Fetch error:', error));
+}
+
+const otvoreniSongDataFunc = (url, setFunc) => {
+    getDataSocket(url, (data) => {
+        setFunc(data);
+    });
 }
 
 /* list of streams to be shown
@@ -77,6 +124,23 @@ const streams = [
         url: 'https://ec2s.crolive.com.hr:8035/stream',
         web: 'https://www.slavonskiradio.hr/',
         frequencies: ['106,2', '100,6', '91,0', '89,7'],
+    },
+    { 
+        name: 'Antena Zagreb',
+        url: 'https://audio.social3.hr/listen/antena_aac/stream?9637',
+        web: 'https://www.antenazagreb.hr/',
+        frequencies: ['89,7'],
+        currentSongUrl: 'https://streaming.antenazagreb.hr/stream/player/info/listen_antena_aac_.txt',
+        currentSongDataFunc: antenaSongDataFunc
+    },
+    { 
+        name: 'Otvoreni',
+        url: 'https://stream2.otvoreni.hr/otvoreni',
+        web: 'https://www.otvoreni.hr/',
+        frequencies: ['107,9', '107,5', '107,3', '105,6', '104,4', '104,3', '104,2', '103,3', '102,6', 
+                        '99,3', '97,7', '93,2', '97,3', '92,6', '92,5', '91,2', '91,1', '90,6', '89,6', '88,3', '87,6'],
+        currentSongUrl: 'wss://s-usc1f-nss-2501.firebaseio.com/.ws?v=5&ns=otvoreni-radio-player',
+        currentSongDataFunc: otvoreniSongDataFunc
     }
 ];
 
