@@ -53,8 +53,9 @@ const App = () => {
       </aside>
 
       <Player stream={currentStream} />
-       {(currentStream.currentSongUrl && <CurrentSong url={currentStream.currentSongUrl} interval={15} songDataFunc={currentStream.currentSongDataFunc}/>)
-        || <span>??</span>}        
+       {(currentStream.currentSongUrl 
+          && <CurrentSong isPlaying={true} url={currentStream.currentSongUrl} interval={15} songDataFunc={currentStream.currentSongDataFunc}/>)
+        || <span>??</span>}
       <hr/>
       
       <div className='streams'>

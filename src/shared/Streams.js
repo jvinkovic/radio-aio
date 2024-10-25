@@ -50,7 +50,7 @@ const antenaSongDataFunc = (url, setFunc) => {
         .then(result => {
             const data = {
                 nowplaying: `${result?.contents.split(' - ')[1]}`,
-                coverart: null,
+                coverart: 'https://scontent.fzag4-1.fna.fbcdn.net/v/t39.30808-6/304747763_5345156328853214_6405861778952560806_n.jpg?_nc_eui2=AeHn9JS_sn2soMekfRFyBWTZs2tcGviE0TWza1wa-ITRNd10UfHQpM8nPQLSxAnEp46y_WOfOBU2wf1fw6_5ySDU&_nc_ohc=ptgtTJawwb8Q7kNvgF08lXt&_nc_ht=scontent.fzag4-1.fna&_nc_gid=AOmTKboOwr4TDgfhyN88dss&oh=00_AYDow_jwQ8jP0O9blAwEbHyTAOZhStPPg3HP8yauNMhaog&oe=67220793',
                 artist: result?.contents.split(' - ')[0]
             };
             
@@ -60,9 +60,27 @@ const antenaSongDataFunc = (url, setFunc) => {
 }
 
 const otvoreniSongDataFunc = (url, setFunc) => {
-    getDataSocket(url, (data) => {
+    getDataSocket(url, (result) => {
+        const data = {
+            nowplaying: result.nowplaying,
+            coverart: 'https://www.otvoreni.hr/ea/wp-content/themes/otvoreni-wp/assets/art/logo-v3.png'
+        };
         setFunc(data);
     });
+}
+
+const radioDjakovoSongDataFunc = (url, setFunc) => {
+    const data = {
+        coverart: 'https://scontent.fzag1-2.fna.fbcdn.net/v/t39.30808-6/462626073_8764868273552834_4718991204732878464_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEZx6RS_bo2HAJbMo4qY-ZWdEEF9sbK-8t0QQX2xsr7yxf9VoM9GRnereVfSt4kcz8OqdIxjWXwQnA3hjcQgVoD&_nc_ohc=95LUG34IDBAQ7kNvgFAK4Kr&_nc_zt=23&_nc_ht=scontent.fzag1-2.fna&_nc_gid=A3wsAjmdGpKkYhIAB3-Ae_e&oh=00_AYDG98D2afJP7iQLZHLrJkEJQH1RgExhOp6ljHHlwbdgag&oe=6721E5CD'
+    };
+    setFunc(data);
+}
+
+const slavonskiSongDataFunc = (url, setFunc) => {
+    const data = {
+        coverart: 'https://slavonskiradio.hr/wp-content/uploads/2024/09/LOGO-SLAVONSKI-COLOR-PNG.png'
+    };
+    setFunc(data);
 }
 
 /* list of streams to be shown
@@ -118,12 +136,17 @@ const streams = [
         url: 'https://ec2s.crolive.com.hr:8305/stream',
         web: 'https://www.radio-djakovo.hr/',
         frequencies: ['100,2', '89,6'],
+        currentSongUrl: 'dummy',
+        currentSongDataFunc: radioDjakovoSongDataFunc
+
     },
     { 
         name: 'Slavonski',
         url: 'https://ec2s.crolive.com.hr:8035/stream',
         web: 'https://www.slavonskiradio.hr/',
         frequencies: ['106,2', '100,6', '91,0', '89,7'],
+        currentSongUrl: 'dummy',
+        currentSongDataFunc: slavonskiSongDataFunc
     },
     { 
         name: 'Antena Zagreb',

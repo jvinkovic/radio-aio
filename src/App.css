@@ -33,7 +33,10 @@ hr {
 .cover-img {
   width: 17vw;
   height: 17vw;
-  border: solid 1px gray;
+}
+
+.current-songs {
+  padding-bottom: 50px;
 }
 
 .song-title, .artist {
