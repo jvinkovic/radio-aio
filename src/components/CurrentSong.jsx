@@ -41,9 +41,9 @@ const CurrentSong = ({url, songDataFunc, checkInterval, onTitleClicked}) => {
     const artist = songData?.artist;
 
     return (<>
-            <h3 style={{cursor: !!onTitleClicked ? 'pointer' : 'auto'}} 
+            <h3 className='song-title' style={{cursor: !!onTitleClicked ? 'pointer' : 'auto'}} 
               onClick={onTitleClicked}>{title}</h3>
-            <h4>{artist}</h4>
+            <h4 className='artist'>{artist}</h4>
             <ModalImage
               className='cover-img'
               small={cover || genericCover}

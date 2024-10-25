@@ -31,7 +31,13 @@ hr {
 }
 
 .cover-img {
-  width: 250px;
+  width: 17vw;
+  height: 17vw;
+  border: solid 1px gray;
+}
+
+.song-title, .artist {
+  min-height: 50px;
 }
 
 .stream-select {

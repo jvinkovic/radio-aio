@@ -67,7 +67,7 @@ const App = () => {
 
       <div className='current-songs' style={{display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
         {streams.map(s =>           
-          <div key={s.url} style={{width: '33vw'}}>
+          <div key={s.url}>
             <h4 className={s.url === currentStream.url ? 'selected stream-select-mini' : 'stream-select-mini'} 
               onClick={() => changeStream(s)}>{s.name}</h4>
             <CurrentSong url={s.currentSongUrl} songDataFunc={s.currentSongDataFunc} onTitleClicked={() => changeStream(s)} />
