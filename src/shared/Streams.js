@@ -20,16 +20,33 @@ const getDataSocket = (url, onMessageFunc) => {
     return {};
 }
 
-const banovinaSongDataFunc = (url, setFunc) => {
-    fetch(url).then(r => r.json()).then(result => {
-        const data = {
-            nowplaying: result.nowplaying,
-            coverart: result.coverart
-        };
-        
-        setFunc(data);
-    });
-};
+
+const shoutemDataRead = (url) => {
+    return fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
+            .then(response => response.json())
+            .then(result => {            
+                const htmlObject = document.createElement('div');
+                htmlObject.innerHTML = result?.contents;
+                const info = htmlObject.innerText;
+    
+                if(!info) {
+                    return;
+                }
+    
+                const listeners = info.split(',')[0];
+                let currentInfo = info.split(',');
+                currentInfo.reverse();
+                currentInfo = currentInfo[0];
+                const artist = currentInfo.split(' - ')[0];
+                const title = currentInfo.split(' - ')[1];
+                const data = {
+                    nowplaying: `${title} [#${listeners}]`,
+                    artist: artist,                        
+                };
+                
+                return data;
+            });
+}
 
 const tamburaskiSongDataFunc = (url, setFunc) => {
     fetch(url).then(r => r.json()).then(result => {
@@ -42,6 +59,43 @@ const tamburaskiSongDataFunc = (url, setFunc) => {
         
         setFunc(data);
     });
+}
+
+const DRSSongDataFunc = (url, setFunc) => {
+    shoutemDataRead(url).then(r => {
+        const data = {
+            nowplaying: r.nowplaying,
+            artist: r.artist,
+            coverart: 'https://amu.me/wp-content/uploads/2018/04/DRS-logo3-300x192-1.jpg'
+        };
+        
+        setFunc(data);    
+    });
+}
+
+const banovinaSongDataFunc = (url, setFunc) => {
+    fetch(url).then(r => r.json()).then(result => {
+        const data = {
+            nowplaying: result.nowplaying,
+            coverart: result.coverart
+        };
+        
+        setFunc(data);
+    });
+};
+
+const radioDjakovoSongDataFunc = (url, setFunc) => {
+    const data = {
+        coverart: 'https://scontent.fzag1-2.fna.fbcdn.net/v/t39.30808-6/462626073_8764868273552834_4718991204732878464_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEZx6RS_bo2HAJbMo4qY-ZWdEEF9sbK-8t0QQX2xsr7yxf9VoM9GRnereVfSt4kcz8OqdIxjWXwQnA3hjcQgVoD&_nc_ohc=95LUG34IDBAQ7kNvgFAK4Kr&_nc_zt=23&_nc_ht=scontent.fzag1-2.fna&_nc_gid=A3wsAjmdGpKkYhIAB3-Ae_e&oh=00_AYDG98D2afJP7iQLZHLrJkEJQH1RgExhOp6ljHHlwbdgag&oe=6721E5CD'
+    };
+    setFunc(data);
+}
+
+const slavonskiSongDataFunc = (url, setFunc) => {
+    const data = {
+        coverart: 'https://slavonskiradio.hr/wp-content/uploads/2024/09/LOGO-SLAVONSKI-COLOR-PNG.png'
+    };
+    setFunc(data);
 }
 
 const antenaSongDataFunc = (url, setFunc) => {
@@ -69,20 +123,9 @@ const otvoreniSongDataFunc = (url, setFunc) => {
     });
 }
 
-const radioDjakovoSongDataFunc = (url, setFunc) => {
-    const data = {
-        coverart: 'https://scontent.fzag1-2.fna.fbcdn.net/v/t39.30808-6/462626073_8764868273552834_4718991204732878464_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEZx6RS_bo2HAJbMo4qY-ZWdEEF9sbK-8t0QQX2xsr7yxf9VoM9GRnereVfSt4kcz8OqdIxjWXwQnA3hjcQgVoD&_nc_ohc=95LUG34IDBAQ7kNvgFAK4Kr&_nc_zt=23&_nc_ht=scontent.fzag1-2.fna&_nc_gid=A3wsAjmdGpKkYhIAB3-Ae_e&oh=00_AYDG98D2afJP7iQLZHLrJkEJQH1RgExhOp6ljHHlwbdgag&oe=6721E5CD'
-    };
-    setFunc(data);
-}
-
-const slavonskiSongDataFunc = (url, setFunc) => {
-    const data = {
-        coverart: 'https://slavonskiradio.hr/wp-content/uploads/2024/09/LOGO-SLAVONSKI-COLOR-PNG.png'
-    };
-    setFunc(data);
-}
-
+/////////////////////
+/// Format for streams
+////////////////////
 /* list of streams to be shown
     name: name to show
     url: stream url
@@ -102,9 +145,11 @@ const streams = [
     },
     { 
         name: 'DRS',
-        url: 'https://eu2.fastcast4u.com/proxy/mic0?mp=/stream&1724290816711',
+        url: 'https://eu2.fastcast4u.com/proxy/mic0?mp=/stream',  
         web: 'https://drugacija.me/',
         frequencies: ['104,8', '101,5', '97,1', '95,5', '93,0', '90,3'],
+        currentSongUrl: 'https://eu2.fastcast4u.com/proxy/mic0/7.html',
+        currentSongDataFunc: DRSSongDataFunc,
     },
     { 
         name: 'Banovina Uživo',
@@ -150,8 +195,9 @@ const streams = [
     },
     { 
         name: 'Antena Zagreb',
-        url: 'https://audio.social3.hr/listen/antena_aac/stream?9637',
+        url: 'https://audio.social3.hr/listen/antena_aac/stream',
         web: 'https://www.antenazagreb.hr/',
+        historyUrl: 'https://streaming.antenazagreb.hr/stream/player/player.html',
         frequencies: ['89,7'],
         currentSongUrl: 'https://streaming.antenazagreb.hr/stream/player/info/listen_antena_aac_.txt',
         currentSongDataFunc: antenaSongDataFunc

@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 const Player = ({stream}) => {
-
-    let playerRef = useRef();   
+    let playerRef = useRef();
 
     useEffect(() => {
         playerRef.current.volume = 0.5;
@@ -25,7 +24,7 @@ const Player = ({stream}) => {
         <audio ref={playerRef}
                 preload="none"
                 controls
-                title="Radio Banovina">
+                title="Radio">
             <source src={stream.url} />
         </audio>
     </div>);
