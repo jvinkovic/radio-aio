@@ -99,6 +99,7 @@ const slavonskiSongDataFunc = (url, setFunc) => {
 }
 
 const antenaSongDataFunc = (url, setFunc) => {
+    try {
     fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
         .then(response => response.json())
         .then(result => {
@@ -111,6 +112,9 @@ const antenaSongDataFunc = (url, setFunc) => {
             setFunc(data);
         })
         .catch(error => console.error('Fetch error:', error));
+    }catch(e){
+        console.error('Antena get song error:', e)
+    }
 }
 
 const otvoreniSongDataFunc = (url, setFunc) => {
