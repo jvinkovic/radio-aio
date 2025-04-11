@@ -12,6 +12,7 @@ const App = () => {
   }
 
   useEffect(() => {
+    // e.g. not supported in iOS
     if ('wakeLock' in navigator) {
       navigator.wakeLock.request().then(wl => console.log('wake lock:', !wl.released));
     } else {
