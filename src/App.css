@@ -7,6 +7,7 @@
 }
 
 aside {
+  padding-top: 15px;
   margin-top: 0 !important;
   display: flex;
   justify-content: space-between;
