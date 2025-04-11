@@ -46,6 +46,7 @@ hr {
 
 .stream-select {
   align-items: center;
+  -webkit-appearance: none; /* Safari */
   appearance: none;
   background-clip: padding-box;
   background-color: initial;
@@ -169,12 +170,13 @@ hr {
   padding: 15px;
   display: flex;
   align-items: center;
-  
-  em {
-    margin-left: 10px;
-    font-size: 1rem;
-  }
 }
+
+.theme-switch-wrapper em {
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
 .theme-switch {  
   align-self: flex-start;
   display: inline-block;
@@ -184,7 +186,9 @@ hr {
 }
 
 .theme-switch input {
-  display:none;
+  display: none;
+  -webkit-appearance: none; /* Safari compatibility */
+  appearance: none;
 }
 
 .slider {
@@ -195,7 +199,8 @@ hr {
   position: absolute;
   right: 0;
   top: 0;
-  transition: .4s;
+  border-radius: 34px;
+  transition: background-color 0.4s ease;
 }
 
 .slider:before {
@@ -205,8 +210,9 @@ hr {
   height: 26px;
   left: 4px;
   position: absolute;
-  transition: .4s;
+  transition: transform 0.4s ease;
   width: 26px;
+  border-radius: 50%;
 }
 
 input:checked + .slider {
@@ -217,12 +223,8 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+.theme-switch input:focus + .slider {
+  box-shadow: 0 0 3px #66bb6a; /* Add focus style for accessibility */
 }
 
 /* END slider switch css */
