@@ -49,83 +49,114 @@ const shoutemDataRead = (url) => {
 }
 
 const tamburaskiSongDataFunc = (url, setFunc) => {
-    fetch(url).then(r => r.json()).then(result => {
-        const album = !!result?.album ? result.album : ' / ';
-        const data = {
-            nowplaying: `${result.title} (${album})`,
-            coverart: result.cover,
-            artist: result.artist
-        };
-        
-        setFunc(data);
-    });
-}
+    const data = {
+        nowplaying: '??',
+        coverart: '',
+        artist: '??'
+    };
+
+    fetch(url)
+        .then(r => r.json())
+        .then(result => {
+            const album = result?.album || ' / ';
+            data.nowplaying = `${result.title} (${album})`;
+            data.coverart = result.cover;
+            data.artist = result.artist;
+        })
+        .catch(error => console.warn('Fetch error:', error))
+        .finally(() => {
+            setFunc(data);
+        });
+};
 
 const DRSSongDataFunc = (url, setFunc) => {
-    shoutemDataRead(url).then(r => {
-        const data = {
-            nowplaying: r.nowplaying,
-            artist: r.artist,
-            coverart: 'https://amu.me/wp-content/uploads/2018/04/DRS-logo3-300x192-1.jpg'
-        };
-        
-        setFunc(data);    
-    });
-}
+    const data = {
+        nowplaying: '??',
+        coverart: 'https://amu.me/wp-content/uploads/2018/04/DRS-logo3-300x192-1.jpg',
+        artist: '??'
+    };
+
+    shoutemDataRead(url)
+        .then(r => {
+            data.nowplaying = r.nowplaying;
+            data.artist = r.artist;
+        })
+        .catch(error => console.warn('Fetch error:', error))
+        .finally(() => {
+            setFunc(data);
+        });
+};
 
 const banovinaSongDataFunc = (url, setFunc) => {
-    fetch(url).then(r => r.json()).then(result => {
-        const data = {
-            nowplaying: result.nowplaying,
-            coverart: result.coverart
-        };
-        
-        setFunc(data);
-    });
+    const data = {
+        nowplaying: '??',
+        coverart: '',
+        artist: '??'
+    };
+
+    fetch(url)
+        .then(r => r.json())
+        .then(result => {
+            data.nowplaying = result.nowplaying;
+            data.coverart = result.coverart;
+        })
+        .catch(error => console.warn('Fetch error:', error))
+        .finally(() => {
+            setFunc(data);
+        });
 };
 
 const radioDjakovoSongDataFunc = (url, setFunc) => {
     const data = {
-        coverart: 'https://www.radio-djakovo.hr/wp-content/uploads/2018/06/Radio-Djakovo-live-stream-logo-final.jpg'
+        nowplaying: '??',
+        coverart: 'https://www.radio-djakovo.hr/wp-content/uploads/2018/06/Radio-Djakovo-live-stream-logo-final.jpg',
+        artist: '??'
     };
+
     setFunc(data);
-}
+};
 
 const slavonskiSongDataFunc = (url, setFunc) => {
     const data = {
-        coverart: 'https://slavonskiradio.hr/wp-content/uploads/2024/09/LOGO-SLAVONSKI-COLOR-PNG.png'
+        nowplaying: '??',
+        coverart: 'https://slavonskiradio.hr/wp-content/uploads/2024/09/LOGO-SLAVONSKI-COLOR-PNG.png',
+        artist: '??'
     };
+
     setFunc(data);
-}
+};
 
 const antenaSongDataFunc = (url, setFunc) => {
-    try {
+    const data = {
+        nowplaying: '??',
+        coverart: 'https://www.antenazagreb.hr/wp-content/uploads/2018/03/ANTENA-LOGOTIP-2018-color-landscape-2.png',
+        artist: '??'
+    };
+
     fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url))
         .then(response => response.json())
         .then(result => {
-            const data = {
-                nowplaying: `${result?.contents.split(' - ')[1]}`,
-                coverart: 'https://scontent.fzag4-1.fna.fbcdn.net/v/t39.30808-6/304747763_5345156328853214_6405861778952560806_n.jpg?_nc_eui2=AeHn9JS_sn2soMekfRFyBWTZs2tcGviE0TWza1wa-ITRNd10UfHQpM8nPQLSxAnEp46y_WOfOBU2wf1fw6_5ySDU&_nc_ohc=ptgtTJawwb8Q7kNvgF08lXt&_nc_ht=scontent.fzag4-1.fna&_nc_gid=AOmTKboOwr4TDgfhyN88dss&oh=00_AYDow_jwQ8jP0O9blAwEbHyTAOZhStPPg3HP8yauNMhaog&oe=67220793',
-                artist: result?.contents.split(' - ')[0]
-            };
-            
-            setFunc(data);
+            data.nowplaying = `${result?.contents.split(' - ')[1]}`;
+            data.artist = result?.contents.split(' - ')[0];
         })
-        .catch(error => console.warn('Fetch error:', error));
-    }catch(e){
-        console.error('Antena get song error:', e)
-    }
-}
+        .catch(error => console.warn('Fetch error:', error))
+        .finally(() => {
+            setFunc(data);
+        });
+};
 
 const otvoreniSongDataFunc = (url, setFunc) => {
+    const data = {
+        nowplaying: '??',
+        coverart: 'https://www.otvoreni.hr/ea/wp-content/themes/otvoreni-wp/assets/art/logo-v3.png',
+        artist: '??'
+    };
+
     getDataSocket(url, (result) => {
-        const data = {
-            nowplaying: result.nowplaying,
-            coverart: 'https://www.otvoreni.hr/ea/wp-content/themes/otvoreni-wp/assets/art/logo-v3.png'
-        };
+        data.nowplaying = result.nowplaying;
         setFunc(data);
     });
-}
+};
 
 /////////////////////
 /// Format for streams
