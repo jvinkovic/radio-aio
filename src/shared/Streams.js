@@ -86,7 +86,7 @@ const banovinaSongDataFunc = (url, setFunc) => {
 
 const radioDjakovoSongDataFunc = (url, setFunc) => {
     const data = {
-        coverart: 'https://scontent.fzag1-2.fna.fbcdn.net/v/t39.30808-6/462626073_8764868273552834_4718991204732878464_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEZx6RS_bo2HAJbMo4qY-ZWdEEF9sbK-8t0QQX2xsr7yxf9VoM9GRnereVfSt4kcz8OqdIxjWXwQnA3hjcQgVoD&_nc_ohc=95LUG34IDBAQ7kNvgFAK4Kr&_nc_zt=23&_nc_ht=scontent.fzag1-2.fna&_nc_gid=A3wsAjmdGpKkYhIAB3-Ae_e&oh=00_AYDG98D2afJP7iQLZHLrJkEJQH1RgExhOp6ljHHlwbdgag&oe=6721E5CD'
+        coverart: 'https://www.radio-djakovo.hr/wp-content/uploads/2018/06/Radio-Djakovo-live-stream-logo-final.jpg'
     };
     setFunc(data);
 }
@@ -111,7 +111,7 @@ const antenaSongDataFunc = (url, setFunc) => {
             
             setFunc(data);
         })
-        .catch(error => console.error('Fetch error:', error));
+        .catch(error => console.warn('Fetch error:', error));
     }catch(e){
         console.error('Antena get song error:', e)
     }

@@ -4,10 +4,18 @@ const Player = ({stream}) => {
     let playerRef = useRef();
 
     useEffect(() => {
-        playerRef.current.volume = 0.5;
-        playerRef.current.load();
-        playerRef.current.play();
-    });
+        const player = playerRef.current;
+        try {
+            player.volume = 0.5;
+            player.load();
+            player.play()
+                .catch(e => {
+                    console.warn('Auto play failed:', e);
+                });
+        } catch (e) {
+            console.warn('Cannot auto start playing audio:', e);
+        }        
+    }, [stream.url]);
 
     return (<div className='player'>
         <h2>
@@ -22,7 +30,7 @@ const Player = ({stream}) => {
             )} Mhz
         </div>}
         <audio ref={playerRef}
-                preload="none"
+                preload="metadata"
                 controls
                 title="Radio">
             <source src={stream.url} />
