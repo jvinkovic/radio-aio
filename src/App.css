@@ -192,7 +192,7 @@ hr {
 }
 
 .slider {
-  background-color: #ccc;
+  background-color: #444;
   bottom: 0;
   cursor: pointer;
   left: 0;
@@ -204,7 +204,7 @@ hr {
 }
 
 .slider:before {
-  background-color: #fff;
+  background-color: #eee;
   bottom: 4px;
   content: "";
   height: 26px;
