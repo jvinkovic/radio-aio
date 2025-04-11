@@ -12,8 +12,11 @@ const App = () => {
   }
 
   useEffect(() => {
-    const wl = navigator.wakeLock.request();
-    wl.then(r => console.log('wake lock:', !r.released));
+    if ('wakeLock' in navigator) {
+      navigator.wakeLock.request().then(wl => console.log('wake lock:', !wl.released));
+    } else {
+      console.warn('Wake Lock API is not supported on this device.');
+    }
   }, []);
 
   useEffect(() => {
