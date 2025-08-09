@@ -154,6 +154,72 @@ const antenaSongDataFunc = (url, setFunc) => {
     });
 };
 
+const naxiSongDataFunc = (url, setFunc) => {
+  const data = {
+    nowplaying: "??",
+    coverart: "https://www.naxi.rs/images/naxiLive.png",
+    artist: "??",
+  };
+
+  const getCurrentSong = (jsonData) => {
+    const html = jsonData.rs || jsonData.rs2;
+    const result = {};
+    if (!html) return;
+
+    const container = document.createElement("div");
+    container.innerHTML = html;
+
+    // Current song info
+    const details = container.querySelector("div.onAir .details");
+    if (details) {
+      // Find artist and song
+      const pTags = details.querySelectorAll("p");
+      if (pTags.length > 1) {
+        // Second <p> contains artist and song
+        const artistSpan = pTags[1].querySelector("span");
+        if (artistSpan) {
+          result.artist = artistSpan.textContent.trim();
+        }
+        // The text after the span is the song title
+        const text = pTags[1].childNodes;
+        for (let i = 0; i < text.length; i++) {
+          if (text[i].nodeType === 3 && text[i].textContent.includes("-")) {
+            result.nowplaying = text[i].textContent.replace("-", "").trim();
+            break;
+          }
+        }
+      }
+    }
+
+    // Cover art
+    const img = container.querySelector("div.onAir .images img");
+    if (img && img.getAttribute("src")) {
+      let src = img.getAttribute("src");
+      if (src.startsWith("//")) src = "https:" + src;
+      result.coverart = src;
+    }
+
+    return [result.nowplaying, result.artist, result.coverart];
+  };
+
+  url = url + Date.now(); // Prevent caching
+  //fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(url))
+  fetch(url)
+    .then((r) => r.json())
+    .then((result) => {
+      const [nowplaying, artist, coverart] = getCurrentSong(result);
+      data.nowplaying = nowplaying;
+      data.artist = artist;
+      if (coverart) {
+        data.coverart = coverart;
+      }
+    })
+    .catch((error) => console.warn("Fetch error:", error))
+    .finally(() => {
+      setFunc(data);
+    });
+};
+
 const otvoreniSongDataFunc = (url, setFunc) => {
   const data = {
     nowplaying: "??",
@@ -199,6 +265,7 @@ const streams = [
     name: "Radio Fortuna MK",
     url: "https://radiofortuna.ipradio.mk/;",
     web: "https://radiofortuna.com.mk/",
+    frequencies: ["96,8"],
     historyUrl: "https://radiofortuna.ipradio.mk/played.html",
     currentSongDataFunc: fortunaSongDataFunc,
   },
@@ -249,6 +316,14 @@ const streams = [
     frequencies: ["89,7"],
     currentSongUrl: "https://streaming.antenazagreb.hr/stream/player/info/listen_antena_aac_.txt",
     currentSongDataFunc: antenaSongDataFunc,
+  },
+  {
+    name: "Naxi Radio BG",
+    url: "https://naxi128ssl.streaming.rs:9152/;",
+    web: "https://www.naxi.rs/",
+    frequencies: ["96,9"],
+    currentSongUrl: "https://www.naxi.rs/stations/rs-naxi.json?_=",
+    currentSongDataFunc: naxiSongDataFunc,
   },
   {
     name: "Otvoreni",
