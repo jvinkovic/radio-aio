@@ -87,6 +87,16 @@ const DRSSongDataFunc = (url, setFunc) => {
         });
 };
 
+const fortunaSongDataFunc = (url, setFunc) => {
+    const data = {
+        nowplaying: '??',
+        coverart: 'https://radiofortuna.com.mk/wp-content/uploads/2024/06/fortuna_herer_logo_544.png',
+        artist: '??'
+    };
+
+    setFunc(data);
+};
+
 const banovinaSongDataFunc = (url, setFunc) => {
     const data = {
         nowplaying: '??',
@@ -185,6 +195,13 @@ const streams = [
         frequencies: ['104,8', '101,5', '97,1', '95,5', '93,0', '90,3'],
         currentSongUrl: 'https://eu2.fastcast4u.com/proxy/mic0/7.html',
         currentSongDataFunc: DRSSongDataFunc,
+    },
+    {
+        name: 'Radio Fortuna MK',
+        url: 'https://radiofortuna.ipradio.mk/;',
+        web: 'https://radiofortuna.com.mk/',
+        historyUrl: 'https://radiofortuna.ipradio.mk/played.html',
+        currentSongDataFunc: fortunaSongDataFunc
     },
     { 
         name: 'Banovina Uživo',
