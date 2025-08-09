@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import genericCover from "../assets/cover.jpg";
 import ModalImage from "react-modal-image";
 
-const CurrentSong = ({ url, songDataFunc, checkInterval, onTitleClicked, isPlaying = false }) => {
+const CurrentSong = ({ url, songDataFunc, checkInterval, onTitleClicked, radioLogo, isPlaying = false }) => {
   const [songData, setSongData] = useState(null);
 
   const getData = () => {
@@ -33,7 +33,7 @@ const CurrentSong = ({ url, songDataFunc, checkInterval, onTitleClicked, isPlayi
     title = "??";
   }
 
-  const cover = songData?.coverart;
+  const cover = radioLogo || songData?.coverart;
   const artist = songData?.artist;
 
   return (

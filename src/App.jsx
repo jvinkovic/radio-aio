@@ -109,6 +109,7 @@ const App = () => {
             </h4>
             <CurrentSong
               url={s.currentSongUrl}
+              radioLogo={s.radioLogo}
               songDataFunc={s.currentSongDataFunc}
               onTitleClicked={() => changeStream(s)}
             />

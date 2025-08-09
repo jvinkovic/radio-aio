@@ -203,11 +203,10 @@ const naxiSongDataFunc = (url, setFunc) => {
   };
 
   url = url + Date.now(); // Prevent caching
-  //fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(url))
-  fetch(url)
+  fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(url))
     .then((r) => r.json())
     .then((result) => {
-      const [nowplaying, artist, coverart] = getCurrentSong(result);
+      const [nowplaying, artist, coverart] = getCurrentSong(JSON.parse(result.contents));
       data.nowplaying = nowplaying;
       data.artist = artist;
       if (coverart) {
@@ -240,6 +239,7 @@ const otvoreniSongDataFunc = (url, setFunc) => {
     name: name to show
     url: stream url
     web: radio webpage
+    radioLogo: radio logo (optional)
     historyUrl: link to songs history (optional)
     currentSongUrl: url to current song details (optional)
     currentSongDataFunc: function to transform current song data (optional)
@@ -250,6 +250,7 @@ const streams = [
     name: "Tamburaški",
     url: "https://listen.radioking.com/radio/552965/stream/612287",
     web: "https://www.tamburaski.com/",
+    radioLogo: "https://static.mytuner.mobi/media/tvos_radios/519/tamburaski-radio.d10ee027.png",
     currentSongUrl: "https://api.radioking.io/widget/radio/tamburaskiradio/track/current",
     currentSongDataFunc: tamburaskiSongDataFunc,
   },
@@ -257,6 +258,7 @@ const streams = [
     name: "DRS",
     url: "https://eu2.fastcast4u.com/proxy/mic0?mp=/stream",
     web: "https://drugacija.me/",
+    radioLogo: "https://amu.me/wp-content/uploads/2018/04/DRS-logo3-300x192-1.jpg",
     frequencies: ["104,8", "101,5", "97,1", "95,5", "93,0", "90,3"],
     currentSongUrl: "https://eu2.fastcast4u.com/proxy/mic0/7.html",
     currentSongDataFunc: DRSSongDataFunc,
@@ -265,6 +267,7 @@ const streams = [
     name: "Radio Fortuna MK",
     url: "https://radiofortuna.ipradio.mk/;",
     web: "https://radiofortuna.com.mk/",
+    radioLogo: "https://cdn.onlineradiobox.com/img/l/7/13697.v4.png",
     frequencies: ["96,8"],
     historyUrl: "https://radiofortuna.ipradio.mk/played.html",
     currentSongDataFunc: fortunaSongDataFunc,
@@ -298,6 +301,7 @@ const streams = [
     name: "Đakovo",
     url: "https://ec2s.crolive.com.hr:8305/stream",
     web: "https://www.radio-djakovo.hr/",
+    radioLogo: "https://www.radio-djakovo.hr/wp-content/uploads/2018/06/Radio-Djakovo-live-stream-logo-final.jpg",
     frequencies: ["100,2", "89,6"],
     currentSongDataFunc: radioDjakovoSongDataFunc,
   },
@@ -305,6 +309,7 @@ const streams = [
     name: "Slavonski",
     url: "https://ec2s.crolive.com.hr:8035/stream",
     web: "https://www.slavonskiradio.hr/",
+    radioLogo: "https://slavonskiradio.hr/wp-content/uploads/2024/09/LOGO-SLAVONSKI-COLOR-PNG.png",
     frequencies: ["106,2", "100,6", "91,0", "89,7"],
     currentSongDataFunc: slavonskiSongDataFunc,
   },
@@ -312,6 +317,7 @@ const streams = [
     name: "Antena Zagreb",
     url: "https://audio.social3.hr/listen/antena_aac/stream",
     web: "https://www.antenazagreb.hr/",
+    radioLogo: "https://www.antenazagreb.hr/wp-content/uploads/2018/03/ANTENA-LOGOTIP-2018-color-landscape-2.png",
     historyUrl: "https://streaming.antenazagreb.hr/stream/player/player.html",
     frequencies: ["89,7"],
     currentSongUrl: "https://streaming.antenazagreb.hr/stream/player/info/listen_antena_aac_.txt",
@@ -321,6 +327,7 @@ const streams = [
     name: "Naxi Radio BG",
     url: "https://naxi128ssl.streaming.rs:9152/;",
     web: "https://www.naxi.rs/",
+    radioLogo: "https://www.naxi.rs/images/naxiLive.png",
     frequencies: ["96,9"],
     currentSongUrl: "https://www.naxi.rs/stations/rs-naxi.json?_=",
     currentSongDataFunc: naxiSongDataFunc,
